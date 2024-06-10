@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import './style.css'
-import { LIST_MOCK } from '../../mocks'
-import { ReactComponent as SearchIcon } from '../../icons/search.svg'
-import { ReactComponent as FavoriteOff } from '../../icons/favoriteOff.svg'
-import { ReactComponent as FavoriteOn } from '../../icons/favoriteOn.svg'
+import '../index'
+import { LIST_MOCK } from '../mocks'
+import { ReactComponent as SearchIcon } from '../icons/search.svg'
+import { ReactComponent as FavoriteOff } from '../icons/favoriteOff.svg'
+import { ReactComponent as FavoriteOn } from '../icons/favoriteOn.svg'
 
 export default function Search() {
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -13,34 +13,13 @@ export default function Search() {
     const [inputValue, setInputValue] = useState<string>('');
     const modalRef = useRef<HTMLDivElement>(null);
 
-
     // sorting in searchline
+
     const filteredItems = useMemo(() => 
       data.filter((el) => el.toLowerCase().includes(inputValue.toLowerCase()))
     , [data, inputValue])
 
-    // sorting in list
-    data.sort((a, b) => {
-        const numA = parseInt(a, 10);
-        const numB = parseInt(b, 10);
-        const isNumA = !isNaN(numA);
-        const isNumB = !isNaN(numB);
-
-        if (isNumA && isNumB) {
-            return numB - numA;
-        } else if (isNumA) {
-            return -1;
-        } else if (isNumB) {
-            return 1;
-        } else {
-            return a.localeCompare(b);
-        }
-    });
-
-    const handleClear = () => {
-        setInputValue('');
-        
-    };
+    data.sort();
 
     // add/delete from favorite
 
@@ -53,7 +32,6 @@ export default function Search() {
             }
         });
     }
-  
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -74,9 +52,9 @@ export default function Search() {
     }, [favorites, isNavigation]);
 
     return (
-        <div className='search'>
+        <div className='head'>
             <button
-                className={isOpenModal ? ' font-text open-modal' : ' font-text'}
+                className={isOpenModal ? 'search font-text open-modal' : 'search font-text'}
                 onClick={() => setIsOpenModal(true)}
             ><SearchIcon />SEARCH
             </button>
@@ -95,7 +73,7 @@ export default function Search() {
                             </input>
                             {
                                 inputValue && (
-                                    <button className="clear-button" onClick={handleClear}>
+                                    <button className="clear-button" onClick={() => setInputValue('')}>
                                         &times;
                                     </button>
                                 )
@@ -104,14 +82,14 @@ export default function Search() {
                         <div className='navigation-bar'>
                             <button
                                 onClick={() => (setIsNavigation('favorites'))}
-                                className='navigate font-text'
+                                className={isNavigation === 'favorites' ? 'navigate font-text  taret' : 'navigate font-text '}
                             >
                                 <FavoriteOn />
                                 FAVORITES
                             </button>
                             <button
                                 onClick={() => (setIsNavigation('allCoins'))}
-                                className='navigate font-text'
+                                className={isNavigation === 'allCoins' ? 'navigate font-text  taret' : 'navigate font-text '}
                             >
                                 ALL COINS
                             </button>
