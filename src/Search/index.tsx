@@ -47,6 +47,7 @@ export default function Search() {
     }, []);
 
     // Update dataNavigate when favorites change
+    
     useEffect(() => {
         setData(isNavigation === 'favorites' ? favorites : LIST_MOCK);
     }, [favorites, isNavigation]);

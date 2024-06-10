@@ -13,6 +13,7 @@ body{
 .font-text  {
   font-size: 13px;
   color: #fff;
+  font-family: Arial;
 }
 
 .open-modal,
@@ -62,7 +63,8 @@ button:hover,
 .container {
   background-color: #0b0d10;
   position: absolute;
-  left: 0;  
+  left: 0;
+  margin-left: 20px;  
   z-index: 1000;
   width: 240px;
   height: 290px;
